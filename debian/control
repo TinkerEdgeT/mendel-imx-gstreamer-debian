@@ -1,4 +1,4 @@
-Source: gstreamer1.0
+Source: imx-gstreamer
 Section: libs
 Priority: optional
 Maintainer: AIY Projects <support-aiyprojects@google.com>
