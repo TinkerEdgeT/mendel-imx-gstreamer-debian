@@ -56,21 +56,7 @@ PKGFILES=\
 	debian/$(gst_pkgname)-tools.manpages \
 	debian/gir1.2-gstreamer-$(gst_abi).install
 
-# Let's decide the package name and url depending on the distribution
-DISTRO = "$(shell dpkg-vendor --query vendor)"
-
-GST_PACKAGE_NAME := "GStreamer (unknown Debian derivative)"
-GST_PACKAGE_ORIGIN="http://packages.qa.debian.org/gstreamer$(gst_abi)"
-
-ifeq ($(DISTRO),"Debian")
-GST_PACKAGE_NAME := "GStreamer (Debian)"
-GST_PACKAGE_ORIGIN="http://packages.qa.debian.org/gstreamer$(gst_abi)"
-endif
-
-ifeq ($(DISTRO),"Ubuntu")
-GST_PACKAGE_NAME := "GStreamer (Ubuntu)"
-GST_PACKAGE_ORIGIN="https://launchpad.net/distros/ubuntu/+source/gstreamer$(gst_abi)"
-endif
+GST_PACKAGE_NAME := "GStreamer"
 
 debian/$(gst_lib).dirs: debian/libgstreamer.dirs debian/rules
 	rm -f $@
@@ -182,7 +168,6 @@ common_conf_flags = \
 	--libdir=\$${prefix}/lib/$(DEB_HOST_MULTIARCH) \
 	--libexecdir=\$${prefix}/lib/$(DEB_HOST_MULTIARCH)/gstreamer$(gst_abi) \
 	--with-package-name=$(GST_PACKAGE_NAME) \
-	--with-package-origin=$(GST_PACKAGE_ORIGIN)
 
 ifeq ($(DEB_HOST_ARCH_OS),linux)
 common_conf_flags += --with-ptp-helper-permissions=capabilities
