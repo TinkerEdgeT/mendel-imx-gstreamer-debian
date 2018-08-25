@@ -19,14 +19,8 @@ Build-Depends: debhelper (>= 10),
                bison (>= 1:2.4),
                flex (>= 2.5.34),
                dpkg-dev (>= 1.15.1),
-               perl-doc,
-               libgirepository1.0-dev (>= 0.9.12-4~),
-               gobject-introspection (>= 0.9.12-4~),
-               gir1.2-glib-2.0,
-               gir1.2-freedesktop,
+               perl-doc:native,
                libcap-dev [linux-any]
-Build-Depends-Indep: gtk-doc-tools (>= 1.12),
-                     libglib2.0-doc
 Standards-Version: 3.9.3
 Homepage: http://gstreamer.freedesktop.org
 
@@ -80,7 +74,6 @@ Depends: libgstreamer1.0-0 (= ${binary:Version}),
          libglib2.0-dev,
          ${shlibs:Depends},
          ${misc:Depends},
-         gir1.2-gstreamer-1.0 (= ${binary:Version})
 Recommends: debhelper
 Description: GStreamer core development files
  GStreamer is a streaming media framework, based on graphs of filters
@@ -109,25 +102,3 @@ Description: Tools for use with GStreamer
  installing new plug-ins.
  .
  This package contains versioned command-line tools for GStreamer.
-
-Package: gir1.2-gstreamer-1.0
-Section: introspection
-Architecture: any
-Depends: ${gir:Depends},
-         ${shlibs:Depends},
-         ${misc:Depends},
-         ${gir:Depends}
-Description: GObject introspection data for the GStreamer library
- This package contains introspection data for the GStreamer streaming media
- framework.
- .
- GStreamer is a streaming media framework, based on graphs of filters
- which operate on media data.  Applications using this library can do
- anything from real-time sound processing to playing videos, and just
- about anything else media-related.  Its plugin-based architecture means
- that new data types or processing capabilities can be added simply by
- installing new plug-ins.
- .
- It can be used by packages using the GIRepository format to generate
- dynamic bindings.
-

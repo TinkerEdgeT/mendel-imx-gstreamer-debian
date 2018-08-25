@@ -54,7 +54,6 @@ PKGFILES=\
 	debian/$(gst_pkgname)-tools.install \
 	debian/$(gst_pkgname)-tools.links \
 	debian/$(gst_pkgname)-tools.manpages \
-	debian/gir1.2-gstreamer-$(gst_abi).install
 
 GST_PACKAGE_NAME := "GStreamer"
 
@@ -84,10 +83,6 @@ debian/$(gst_lib).postinst: debian/libgstreamer.postinst debian/rules
 		sed 's/@MULTIARCH@/$(DEB_HOST_MULTIARCH)/g' | \
 		sed 's/@GST_ABI@/$(gst_abi)/g' \
 		> $@
-
-debian/gir1.2-gstreamer-$(gst_abi).install: debian/gir1.2-gstreamer.install debian/rules
-	rm -f $@
-	cp -v $< $@
 
 debian/$(gst_lib_dev).install: debian/libgstreamer-dev.install debian/rules
 	rm -f $@
@@ -176,23 +171,14 @@ common_conf_flags += --with-ptp-helper-permissions=setuid-root \
 	--with-ptp-helper-setuid-user=nobody --with-ptp-helper-setuid-group=nobody
 endif
 
-indep_conf_flags = \
-	--with-html-dir=\$${prefix}/share/doc/$(gst_pkgname)-doc
-
-# only build the docs if gtk-doc-tools is installed, i.e. binary-indep is
-# called
-# ifeq ($(shell test "`dpkg -l gtk-doc-tools | grep ^ii`" && echo binary-indep),binary-indep)
-# indep_conf_flags += --enable-gtk-doc --enable-docbook
-# endif
-
-DEB_CONFIGURE_EXTRA_FLAGS := $(common_conf_flags) $(indep_conf_flags)
+DEB_CONFIGURE_EXTRA_FLAGS := $(common_conf_flags)
 
 DEB_DH_MAKESHLIBS_ARGS_$(gst_lib) += -X "/usr/lib/$(DEB_HOST_MULTIARCH)/gstreamer-$(gst_abi)" -V $(gst_shlibs_dep) -- -c4
 DEB_INSTALL_DOCS_ALL += debian/README.Debian NEWS
 DEB_SHLIBDEPS_INCLUDE += debian/$(gst_lib)/usr/lib/$(DEB_HOST_MULTIARCH)
 
 install/$(gst_lib_dev)::
-	gcc -o debian/tmp/usr/bin/gst-codec-info-1.0 debian/gst-codec-info.c $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) `pkg-config --libs --cflags glib-2.0 gthread-2.0 gmodule-no-export-2.0 gobject-2.0` debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/libgstreamer-1.0.so -Idebian/tmp/usr/include/gstreamer-1.0 -Idebian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/gstreamer-1.0/include
+	$(DEB_HOST_GNU_TYPE)-gcc -o debian/tmp/usr/bin/gst-codec-info-1.0 debian/gst-codec-info.c $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) `$(DEB_HOST_GNU_TYPE)-pkg-config --libs --cflags glib-2.0 gthread-2.0 gmodule-no-export-2.0 gobject-2.0` debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/libgstreamer-1.0.so -Idebian/tmp/usr/include/gstreamer-1.0 -Idebian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/gstreamer-1.0/include
 	perldoc -o man debian/dh_gstscancodecs > debian/tmp/usr/share/man/man1/dh_gstscancodecs.1
 
 .PHONY: maint
