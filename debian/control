@@ -1,7 +1,7 @@
 Source: imx-gstreamer
 Section: libs
 Priority: optional
-Maintainer: AIY Projects <support-aiyprojects@google.com>
+Maintainer: AIY Projects <coral-support@google.com>
 Build-Depends: debhelper (>= 10),
                cdbs (>= 0.4.93~),
                gnome-pkg-tools (>= 0.7),
