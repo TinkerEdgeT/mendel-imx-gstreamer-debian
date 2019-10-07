@@ -1,8 +1,8 @@
-imx-gstreamer (1.14.4+imx-3) UNRELEASED; urgency=medium
+imx-gstreamer (1.14.4+imx-3) mendel-day; urgency=medium
 
   * Update to 1.14.4
 
- -- Coral <coral-support@google.com>  Wed, 05 Jun 2019 15:23:23 -0700
+ -- Coral <coral-support@google.com>  Mon, 07 Oct 2019 13:23:08 -0500
 
 imx-gstreamer (1.12.2+imx-2) mendel-chef; urgency=medium
 
